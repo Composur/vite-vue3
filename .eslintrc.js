@@ -28,7 +28,8 @@ module.exports = {
         props: true,
         ignorePropertyModificationsFor: ['state', 'config']
       }
-    ]
+    ],
+    'no-console': 'off'
   },
   settings: {}
 }

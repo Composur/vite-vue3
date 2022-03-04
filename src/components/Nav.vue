@@ -6,9 +6,8 @@
         v-for="(nav, index) in navList"
         :key="index"
         :class="{ active: nav.isActive }"
-        @click="navClick(nav)"
       >
-        {{ nav.name }}
+        <router-link :to="nav.path">{{ nav.name }}</router-link>
       </li>
     </ul>
   </aside>
@@ -27,6 +26,11 @@ export default defineComponent({
 
     const reactiveData = reactive({
       navList: [
+        {
+          name: 'app1',
+          isActive: false,
+          path: '/micro/app1'
+        },
         {
           name: 'Home',
           isActive: false,
@@ -47,11 +51,17 @@ export default defineComponent({
           isActive: false,
           path: '/test'
         }
-      ],
+      ]
 
-      navClick(e: NavItem) {
-        router.push(e.path)
-      }
+      // navClick(e: NavItem) {
+      //   router.push(e.path)
+      //   // console.log(e, router)
+      //   // nextTick(() => {
+      //   //   router.replace({
+      //   //     path: `/redirect${e.path}`
+      //   //   })
+      //   // })
+      // }
     })
 
     const changeNavActive = (currentPath: string) => {
@@ -83,32 +93,27 @@ export default defineComponent({
 </script>
 
 <style scoped lang="stylus">
-
-@import "../style/basic.styl"
+@import '../style/basic.styl';
 
 .nav {
-  position relative
-  width 100%
-  height 100%
-  box-sizing border-box
-  background: #fff
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background: #fff;
 
   .nav-list {
-
     .nav-item {
-      box-sizing border-box
-      width 100%
-      height 60px
-      cursor pointer
+      box-sizing: border-box;
+      width: 100%;
+      height: 60px;
+      cursor: pointer;
 
       &.active {
-        font-weight bold
-        background $second-background-color
+        font-weight: bold;
+        background: $second-background-color;
       }
-
     }
-
   }
-
 }
 </style>

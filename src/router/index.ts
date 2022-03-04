@@ -1,9 +1,21 @@
-import { createRouter, createWebHashHistory, Router, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/Home.vue'
 import Vuex from '@/views/Vuex.vue'
 import Test from '@/views/Test.vue'
+import microRoute from '@/micro/microRoute'
+import Main from '@/components/Main.vue'
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: '/redirect',
+    component: Main,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue')
+      }
+    ]
+  },
   {
     path: '/',
     name: 'Home',
@@ -23,11 +35,13 @@ const routes: Array<RouteRecordRaw> = [
     path: '/test',
     name: 'Test',
     component: Test
-  }
+  },
+  // 子应用路由容器
+  ...microRoute
 ]
 
 const router: Router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
