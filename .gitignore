@@ -11,6 +11,7 @@
 *.local
 yarn.lock
 package-lock.json
+yarn-error.log
 
 # IDEs and editors
 /.idea
