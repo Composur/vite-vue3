@@ -29,7 +29,8 @@ module.exports = {
         ignorePropertyModificationsFor: ['state', 'config']
       }
     ],
-    'no-console': 'off'
+    'no-console': 'off',
+    'vue/no-v-model-argument': 'off'
   },
   settings: {}
 }

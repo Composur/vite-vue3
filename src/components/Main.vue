@@ -1,106 +1,68 @@
 <template>
-  <main class="main-container">
-    <div class="top">
-      <Header />
-    </div>
+  <section id="cns-main-app">
+    <section class="cns-menu-wrapper">
+      <Nav1 />
+    </section>
+    <section class="cns-frame-wrapper">
+      <!-- 主应用渲染区，用于挂载主应用路由触发的组件 -->
+      <router-view v-show="$route.name" />
 
-    <div class="bottom">
-      <div class="left">
-        <Nav />
-      </div>
-
-      <div class="right">
-        <div class="content">
-          <keep-alive include="MicroApp">
-            <router-view />
-          </keep-alive>
-        </div>
-      </div>
-    </div>
-  </main>
+      <!-- 子应用渲染区，用于挂载子应用节点 -->
+      <section v-show="!$route.name" id="frame"></section>
+    </section>
+  </section>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Header from '@/components/Header.vue'
-import Nav from '@/components/Nav.vue'
+import Nav1 from '@/components/Nav1.vue'
 
 export default defineComponent({
   name: 'Main',
   components: {
-    Header,
-    Nav
+    Nav1
   }
 })
 </script>
 
-<style scoped lang="stylus">
-@import '../style/basic.styl';
-
-$top-height = 60px;
-$left-side-width = 80px;
-
-.main-container {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 100%;
+<style lang="less" scoped>
+#cns-main-app {
   height: 100%;
-  background: $second-background-color;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  .top {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    height: $top-height;
-    margin-bottom: 10px;
+  position: relative;
+  .cns-menu-wrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 40;
+    width: 172px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
-
-  .bottom {
-    position: relative;
-    box-sizing: border-box;
+  .cns-nav-wrapper {
+    position: fixed;
     width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-
-    .left {
-      position: relative;
-      width: $left-side-width;
-      height: 100%;
-      box-sizing: border-box;
-    }
-
-    .right {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      box-sizing: border-box;
-      padding: 0 10px 10px 10px;
-
-      .content {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: $background-color;
-        border-radius: 5px;
-        box-sizing: border-box;
-        padding: 10px;
-      }
-    }
+    min-width: 1060px;
+    padding-left: 172px;
+    left: 0;
+    top: 0;
+    z-index: 30;
   }
 }
 
-.page-links {
-  a {
-    font-weight: bold;
-    margin: 0 20px;
+.cns-frame-wrapper {
+  padding-left: 172px;
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#cns-frame {
+  width: 100%;
+  height: 100%;
+  > :first-child {
+    height: 100%;
   }
 }
 </style>
