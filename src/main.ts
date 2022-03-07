@@ -6,6 +6,8 @@ import App from './App.vue'
 import styleImport from '@/utils/style-import'
 import '@/style/basic.styl'
 import 'ant-design-vue/dist/antd.css'
+import start from '@/micro/index'
 
 const app = createApp(App)
+start()
 styleImport(app).use(Antd).use(router).use(store, key).mount('#app')

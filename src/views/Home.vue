@@ -1,7 +1,6 @@
 <template>
   <div class="home-container page-container">
-    <img class="vue-element-plus-logo" alt="Vue logo" src="../assets/logo.png" />
-    <div class="page-title">Vite2.x + Vue3.x + TypeScript + Element Plus</div>
+    <div class="page-title">主应用 Home</div>
   </div>
 </template>
 
@@ -16,7 +15,7 @@ export default defineComponent({
 <style scoped lang="stylus">
 .home-container {
   .vue-element-plus-logo {
-    width 50%
+    width: 50%;
   }
 }
 </style>

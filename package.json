@@ -1,8 +1,7 @@
 {
-  "name": "vite-vue3-starter",
+  "name": "vite-vue3",
   "version": "0.0.1",
-  "private": false,
-  "description": "A Vite2.x + Vue3 + TypeScript template starter",
+  "description": "Vite2.x + Vue3 + TypeScript + qiankun",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -16,20 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/XPoet/vite-vue3-starter.git"
+    "url": "git+ssh://git@github.com:Composur/vite-vue3.git"
   },
   "keywords": [
     "Vite",
     "Vue3",
-    "TypeScript",
-    "Starter"
+    "TypeScript"
   ],
-  "author": "XPoet",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/XPoet/vite-vue3-starter/issues"
-  },
-  "homepage": "https://github.com/XPoet/vite-vue3-starter#readme",
+  "homepage": "composur.github.io/vite-vue3",
   "lint-staged": {
     "*.{vue,js,ts}": "eslint --fix"
   },

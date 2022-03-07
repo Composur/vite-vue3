@@ -6,6 +6,7 @@ import {
 } from 'qiankun'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { message as mssg } from 'ant-design-vue'
 
 // 子应用配置
 import apps from './apps'
@@ -35,6 +36,7 @@ addGlobalUncaughtErrorHandler((event: Event | string) => {
   const { message: msg, error } = event as any
   // 加载失败时提示
   if (msg && msg.includes('died in status LOADING_SOURCE_CODE')) {
+    mssg.error(`子应用 ${error?.appOrParcelName} 加载失败，请检查应用是否可运行`)
     console.error(`子应用 ${error?.appOrParcelName} 加载失败，请检查应用是否可运行`)
   }
 })
@@ -48,6 +50,7 @@ addGlobalUncaughtErrorHandler((event: Event | string) => {
  * runAfterFirstMounted
  */
 runAfterFirstMounted(() => {
+  mssg.success('[MainApp] first app mounted')
   console.log('[MainApp] first app mounted')
 })
 

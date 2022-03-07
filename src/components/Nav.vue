@@ -1,119 +1,145 @@
 <template>
-  <aside class="nav">
-    <ul class="nav-list">
-      <li
-        class="nav-item flex-center"
-        v-for="(nav, index) in navList"
-        :key="index"
-        :class="{ active: nav.isActive }"
-      >
-        <router-link :to="nav.path">{{ nav.name }}</router-link>
-      </li>
-    </ul>
-  </aside>
+  <section class="cns-main-menu">
+    <a-menu mode="inline" theme="dark" :selectedKeys="[selectKey]">
+      <a-menu-item v-for="item in menus" :key="item.key" @click="changeMenu(item)">
+        <template #icon>
+          <component :is="item.icon" />
+        </template>
+        <router-link :to="{ path: item.path }" replace>
+          <span>{{ item.title }}</span>
+        </router-link>
+      </a-menu-item>
+    </a-menu>
+  </section>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, watch } from 'vue'
-import { useRouter } from 'vue-router'
-import { NavItem } from '../common/types'
+import { defineComponent, onMounted, reactive, ref, toRefs, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import {
+  MailOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+  SmileFilled
+} from '@ant-design/icons-vue'
 
+type MenuItem = {
+  key: string
+  title: string
+  icon?: string
+  path: string
+  children?: MenuItem[]
+}
+const menus: MenuItem[] = [
+  {
+    key: 'Home',
+    title: '主页(主)',
+    path: '/',
+    icon: 'MailOutlined'
+  },
+  {
+    key: 'VueMicroApp',
+    title: 'Vue主页（子）',
+    path: '/vue',
+    icon: 'SmileFilled'
+  },
+  {
+    key: 'VueMicroAppList',
+    title: 'Vue列表页（子）',
+    path: '/vue/list',
+    icon: 'AppstoreOutlined'
+  },
+  {
+    key: 'StaticMicroApp',
+    title: 'Static 微应用（子）',
+    path: '/static',
+    icon: 'SettingOutlined'
+  }
+]
 export default defineComponent({
-  name: 'Nav',
-
+  components: {
+    MailOutlined,
+    AppstoreOutlined,
+    SettingOutlined,
+    SmileFilled
+  },
   setup() {
-    const router = useRouter()
-
-    const reactiveData = reactive({
-      navList: [
-        {
-          name: 'app1',
-          isActive: false,
-          path: '/micro/app1'
-        },
-        {
-          name: 'Home',
-          isActive: false,
-          path: '/'
-        },
-        {
-          name: 'Vuex',
-          isActive: false,
-          path: '/vuex'
-        },
-        {
-          name: 'Axios',
-          isActive: false,
-          path: '/axios'
-        },
-        {
-          name: 'Test',
-          isActive: false,
-          path: '/test'
-        }
-      ]
-
-      // navClick(e: NavItem) {
-      //   router.push(e.path)
-      //   // console.log(e, router)
-      //   // nextTick(() => {
-      //   //   router.replace({
-      //   //     path: `/redirect${e.path}`
-      //   //   })
-      //   // })
-      // }
+    const $route = useRoute()
+    const state = reactive({
+      menus
     })
+    const selectKey = ref('')
 
-    const changeNavActive = (currentPath: string) => {
-      reactiveData.navList.forEach((v: NavItem) => {
-        const temp = v
-        temp.isActive = temp.path === currentPath
-        return temp
-      })
+    function findCurrentMenu(m: MenuItem[], currentPath: string): MenuItem | null {
+      for (let i = 0; i < m.length; i += 1) {
+        const menu = m[i]
+        const { path } = menu
+        if (path === currentPath) return menu
+
+        const currentMenu = findCurrentMenu(menu.children || [], currentPath)
+        if (currentMenu) return currentMenu
+      }
+      return null
+    }
+    function initMenus(menu, path) {
+      const currentMenu = findCurrentMenu(menu, path) as MenuItem
+      if (!currentMenu) return
+      const { key } = currentMenu
+      selectKey.value = key
     }
 
+    function changeMenu(item: MenuItem) {
+      const { key } = item
+      selectKey.value = key
+    }
     watch(
-      () => router.currentRoute.value,
-      (_n) => {
-        changeNavActive(_n.path)
+      () => $route.path,
+      (path) => {
+        initMenus(state.menus, path)
       }
     )
-
     onMounted(() => {
-      router.isReady().then(() => {
-        changeNavActive(router.currentRoute.value.path)
-      })
+      console.log($route)
+      initMenus(state.menus, $route.path)
     })
 
     return {
-      ...toRefs(reactiveData)
+      ...toRefs(state),
+      changeMenu,
+      selectKey
     }
   }
 })
 </script>
 
-<style scoped lang="stylus">
-@import '../style/basic.styl';
-
-.nav {
-  position: relative;
+<style lang="less" scoped>
+.cns-main-menu {
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  background: #fff;
-
-  .nav-list {
-    .nav-item {
-      box-sizing: border-box;
-      width: 100%;
-      height: 60px;
-      cursor: pointer;
-
-      &.active {
-        font-weight: bold;
-        background: $second-background-color;
-      }
+  background: #001529;
+  .cns-menu {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    a {
+      color: #fff;
+      text-decoration: none;
     }
+  }
+  .cns-parent-title {
+    font-size: 13px;
+    color: rgba(233, 241, 255, 0.75);
+  }
+  .cns-child-title {
+    font-size: 13px;
+    color: #fff;
+  }
+  .cns-child-title:hover {
+    color: #408fff;
+  }
+  /deep/ .cns-menu-sub {
+    background: rgb(12, 28, 53);
   }
 }
 </style>
