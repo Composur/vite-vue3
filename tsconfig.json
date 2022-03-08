@@ -11,6 +11,7 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "strictNullChecks": false, // 是否对 null 进行判断
     "lib": [
       "esnext",
       "dom"

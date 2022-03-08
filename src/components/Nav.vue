@@ -38,6 +38,12 @@ const menus: MenuItem[] = [
     icon: 'MailOutlined'
   },
   {
+    key: 'Test',
+    title: '测试页',
+    path: '/test',
+    icon: 'MailOutlined'
+  },
+  {
     key: 'VueMicroApp',
     title: 'Vue主页（子）',
     path: '/vue',
@@ -99,7 +105,6 @@ export default defineComponent({
       }
     )
     onMounted(() => {
-      console.log($route)
       initMenus(state.menus, $route.path)
     })
 

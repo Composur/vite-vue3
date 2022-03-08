@@ -1,21 +1,9 @@
 <template>
-  <div class="home-container page-container">
-    <div class="page-title">主应用 Home</div>
+  <div>
+    <h1>Home</h1>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts"></script>
 
-export default defineComponent({
-  name: 'Home'
-})
-</script>
-
-<style scoped lang="stylus">
-.home-container {
-  .vue-element-plus-logo {
-    width: 50%;
-  }
-}
-</style>
+<style scoped></style>
