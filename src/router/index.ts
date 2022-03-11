@@ -1,22 +1,8 @@
-import { createRouter, createWebHistory, Router, RouteRecordRaw } from 'vue-router'
-import Home from '@/views/Home.vue'
-import Test from '@/views/Test.vue'
-// import microRoute from '@/micro/microRoute'
-
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: Test
-  }
-  // 子应用路由容器
-  // ...microRoute
-]
+/**
+ * 路由的创建、拦截等逻辑功能
+ */
+import { createRouter, createWebHistory, Router } from 'vue-router'
+import routes from './routes'
 
 const router: Router = createRouter({
   history: createWebHistory(),

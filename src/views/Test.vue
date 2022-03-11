@@ -95,7 +95,7 @@ export default defineComponent({
 
     // 获取 css modules 编译后的 class
     const style = useCssModule()
-    console.log(style)
+    // console.log(style)
     style.msg = 'msg'
     return {
       count,
