@@ -1,16 +1,39 @@
 <template>
   <div class="test-container page-container">
-    <div class="page-title">Unit Test Page</div>
+    <h1 class="page-title">ref reactive toRef toRefs</h1>
     <p>ref 定义 count is: {{ count }}</p>
     <p>普通对象属性进行 toRef count is: {{ s }}</p>
     <p>reactive 解构用toRefs转为响应 count is: {{ count1 }}</p>
     <p>{{ id }}--{{ name }}--{{ age }}</p>
     <button @click="increment">increment</button>
+    <h1 class="page-title">computer watch</h1>
+    <span>只能读不能写comVal：{{ comVal }}</span>
+    <div>
+      compute 的 set 用法： 原始的输入：
+      <input
+        type="text"
+        v-model="tagsStr"
+        placeholder="请输入标签，多个标签用英文逗号隔开"
+      />
+      需要处理的成的 tags {{ tags }}
+    </div>
+    <h1 class="page-title">
+      <p class="msg">Hello World!</p>
+      <p :class="$style.msg">Hello World!</p>
+    </h1>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive, toRefs, toRef } from 'vue'
+import {
+  defineComponent,
+  ref,
+  reactive,
+  toRefs,
+  toRef,
+  computed,
+  useCssModule
+} from 'vue'
 
 export default defineComponent({
   name: 'Test',
@@ -47,15 +70,60 @@ export default defineComponent({
       userInfo.name = 'Tom'
       userInfo.age = 20
     }, 2000)
-    return { count, increment, s, ...toRefs(count1), ...toRefs(userInfo) }
+
+    const comVal = computed(() => count.value + userInfo.age)
+
+    // 这个完成输入要用到的数组
+    const tags = ref<string[]>([])
+
+    const tagsStr = computed({
+      // 所以通过getter来转成字符串
+      get() {
+        return tags.value.join(',')
+      },
+      // 然后在用户输入的时候，切割字符串转换回数组
+      set(newVal: string) {
+        tags.value = newVal.split(',')
+      }
+    })
+
+    // 动态绑定样式
+    const fontColor = ref<string>('#ff0000')
+    setTimeout(() => {
+      fontColor.value = '#666'
+    }, 3000)
+
+    // 获取 css modules 编译后的 class
+    const style = useCssModule()
+    console.log(style)
+    style.msg = 'msg'
+    return {
+      count,
+      increment,
+      s,
+      ...toRefs(count1),
+      ...toRefs(userInfo),
+      comVal,
+      tagsStr,
+      tags,
+      fontColor
+    }
   }
 })
 </script>
-
+<style module>
+.msg {
+  color: #ff0000;
+}
+</style>
 <style scoped lang="stylus">
 button {
   cursor: pointer;
   font-size: 20px;
   padding: 5px;
+}
+
+.msg {
+  color: v-bind(fontColor);
 }
 </style>

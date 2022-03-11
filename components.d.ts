@@ -13,7 +13,6 @@ declare module 'vue' {
     Header: typeof import('./src/components/Header.vue')['default']
     Main: typeof import('./src/components/Main.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
-    Nav1: typeof import('./src/components/Nav1.vue')['default']
   }
 }
 
