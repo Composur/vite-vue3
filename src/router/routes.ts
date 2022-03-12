@@ -5,6 +5,7 @@ import { RouteRecordRaw } from 'vue-router'
 
 import Home from '@/views/Home.vue'
 import Test from '@/views/Test.vue'
+import Setup from '@/views/Test/Setup.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,9 +27,9 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
-        path: 'page1',
-        name: 'TestPage1',
-        component: Test,
+        path: '/setup',
+        name: 'Setup',
+        component: Setup,
         meta: {
           title: '测试页1',
           icon: 'MailOutlined'

@@ -3,17 +3,14 @@
     <a-menu mode="inline" theme="dark" :selectedKeys="[selectKey]">
       <template v-for="item in menus">
         <template v-if="!item.children">
-          <a-menu-item @click="changeMenu(item)" :key="item.key">
-            <template #icon>
-              <component :is="item.icon" />
-            </template>
-            <router-link :to="{ path: item.path }" replace>
-              <span>{{ item.title }}</span>
-            </router-link>
-          </a-menu-item>
+          <sub-menu-item :item="item" @clickHandle="changeMenu" :key="item.key" />
         </template>
         <template v-else>
-          <sub-menu :key="item.key" :menuInfo="item"></sub-menu>
+          <sub-menu
+            :key="item.key"
+            :menuInfo="item"
+            @clickHandle="changeMenu"
+          ></sub-menu>
         </template>
       </template>
     </a-menu>
@@ -23,52 +20,14 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-  SmileFilled,
-  PieChartOutlined
-} from '@ant-design/icons-vue'
 import routes from '@/router/routes'
-
-const SubMenu = {
-  name: 'SubMenu',
-  props: {
-    menuInfo: {
-      type: Object,
-      default: () => ({})
-    }
-  },
-  template: `
-    <a-sub-menu :key="menuInfo.key">
-      <template #icon><MailOutlined /></template>
-      <template #title>{{ menuInfo.title }}</template>
-      <template v-for="item in menuInfo.children" :key="item.key">
-        <template v-if="!item.children">
-          <a-menu-item :key="item.key">
-            <template #icon>
-              <PieChartOutlined />
-            </template>
-            {{ item.title }}
-          </a-menu-item>
-        </template>
-        <template v-else>
-          <sub-menu :menu-info="item" :key="item.key" />
-        </template>
-      </template>
-    </a-sub-menu>
-  `,
-  components: {
-    PieChartOutlined,
-    MailOutlined
-  }
-}
+import SubMenu from './SubMenu.vue'
+import SubMenuItem from './SubMenuItem.vue'
 /* eslint-disable no-param-reassign */
-const s = (r: any) => {
-  r.forEach((item: any) => {
+const foo = (temp: any) => {
+  temp.forEach((item: any) => {
     if (item.children) {
-      s(item.children)
+      foo(item.children)
     }
     delete item.component
     item.key = item.path
@@ -78,18 +37,8 @@ const s = (r: any) => {
 }
 
 const navMenus = [...routes]
-s(navMenus)
-// const navMenus = routes.map(({ path, name, meta, children }) => {
-//   return {
-//     path,
-//     name,
-//     meta,
-//     key: path,
-//     title: meta.title,
-//     icon: meta.icon,
-//     children
-//   }
-// })
+foo(navMenus)
+
 type MenuItem = {
   key: string
   title: string
@@ -122,11 +71,8 @@ const menus = [...navMenus, ...microMenus]
 console.log(menus)
 export default defineComponent({
   components: {
-    MailOutlined,
-    AppstoreOutlined,
-    SettingOutlined,
-    SmileFilled,
-    'sub-menu': SubMenu
+    'sub-menu': SubMenu,
+    'sub-menu-item': SubMenuItem
   },
   setup() {
     const $route = useRoute()
