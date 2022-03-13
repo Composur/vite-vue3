@@ -1,14 +1,21 @@
 <template>
   <section class="cns-main-menu">
-    <a-menu mode="inline" theme="dark" :selectedKeys="[selectKey]">
+    <a-menu
+      mode="inline"
+      theme="dark"
+      :selectedKeys="[selectKey]"
+      :open-keys="openKeys"
+      @openChange="onOpenChange"
+    >
       <template v-for="item in menus">
         <template v-if="!item.children">
           <sub-menu-item :item="item" @clickHandle="changeMenu" :key="item.key" />
         </template>
         <template v-else>
           <sub-menu
-            :key="item.key"
+            v-bind="$props"
             :menuInfo="item"
+            :key="item.key"
             @clickHandle="changeMenu"
           ></sub-menu>
         </template>
@@ -31,8 +38,8 @@ const foo = (temp: any) => {
     }
     delete item.component
     item.key = item.path
-    item.title = item.meta.title
-    item.icon = item.meta.icon
+    item.title = item.meta?.title
+    item.icon = item.meta?.icon
   })
 }
 
@@ -68,17 +75,26 @@ const microMenus: MenuItem[] = [
   }
 ]
 const menus = [...navMenus, ...microMenus]
-console.log(menus)
 export default defineComponent({
   components: {
     'sub-menu': SubMenu,
     'sub-menu-item': SubMenuItem
   },
   setup() {
+    const rootSubMenuKeys: string[] = []
+    // eslint-disable-next-line no-restricted-syntax
+    for (const { children, path } of menus) {
+      if (children && children.length > 0) {
+        rootSubMenuKeys.push(path)
+      }
+    }
     const $route = useRoute()
     const state = reactive({
-      menus
+      menus,
+      openKeys: [],
+      rootSubMenuKeys
     })
+
     const selectKey = ref('')
 
     function findCurrentMenu(m: MenuItem[], currentPath: string): MenuItem | null {
@@ -98,7 +114,14 @@ export default defineComponent({
       const { key } = currentMenu
       selectKey.value = key
     }
-
+    const onOpenChange = (openKeys: string[]) => {
+      const latestOpenKey = openKeys.find((key) => state.openKeys.indexOf(key) === -1)
+      if (state.rootSubMenuKeys.indexOf(latestOpenKey!) === -1) {
+        state.openKeys = openKeys
+      } else {
+        state.openKeys = latestOpenKey ? [latestOpenKey] : []
+      }
+    }
     function changeMenu(item: MenuItem) {
       const { key } = item
       selectKey.value = key
@@ -116,7 +139,8 @@ export default defineComponent({
     return {
       ...toRefs(state),
       changeMenu,
-      selectKey
+      selectKey,
+      onOpenChange
     }
   }
 })

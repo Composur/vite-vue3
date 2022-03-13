@@ -1,10 +1,10 @@
 <template>
-  <a-sub-menu>
+  <a-sub-menu :key="menuInfo.key">
     <template #icon><MailOutlined /></template>
     <template #title>{{ menuInfo.title }}</template>
     <template v-for="item in menuInfo.children">
       <template v-if="!item.children">
-        <SubMenuItem :item="item" :key="item.key" @clickHandle="clickHandle(item)" />
+        <SubMenuItem :item="item" @clickHandle="clickHandle(item)" :key="item.key" />
       </template>
       <template v-else>
         <sub-menu :menu-info="item" :key="item.key" />
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { MailOutlined } from '@ant-design/icons-vue'
+
 import SubMenuItem from './SubMenuItem.vue'
 
 export default defineComponent({
@@ -26,7 +26,6 @@ export default defineComponent({
     }
   },
   components: {
-    MailOutlined,
     SubMenuItem
   },
   setup(props, context) {

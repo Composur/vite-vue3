@@ -13,6 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { MailOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent({
   props: {
@@ -21,6 +22,7 @@ export default defineComponent({
       default: () => ({})
     }
   },
+  components: { MailOutlined },
   setup(props, context) {
     const changeMenu = (item) => {
       context.emit('clickHandle', item)

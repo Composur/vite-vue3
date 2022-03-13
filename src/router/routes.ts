@@ -31,7 +31,42 @@ const routes: Array<RouteRecordRaw> = [
         name: 'Setup',
         component: Setup,
         meta: {
-          title: '测试页1',
+          title: 'setup',
+          icon: 'MailOutlined'
+        }
+      }
+    ]
+  },
+  {
+    path: '/micro',
+    redirect: '/micro/vue',
+    component: Home,
+    meta: {
+      title: '微服',
+      icon: 'MailOutlined'
+    },
+    children: [
+      {
+        path: '/vue',
+        component: Home,
+        meta: {
+          title: 'Vue主页（子）',
+          icon: 'MailOutlined'
+        }
+      },
+      {
+        path: '/vue/list',
+        component: Home,
+        meta: {
+          title: 'Vue列表页（子）',
+          icon: 'MailOutlined'
+        }
+      },
+      {
+        path: '/static',
+        component: Home,
+        meta: {
+          title: 'Static 微应用（子）',
           icon: 'MailOutlined'
         }
       }
