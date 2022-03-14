@@ -28,9 +28,9 @@ export default defineComponent({
   components: {
     SubMenuItem
   },
-  setup(props, context) {
+  setup(props, { emit }) {
     const clickHandle = (item) => {
-      context.emit('clickHandle', item)
+      emit('clickHandle', item)
     }
     return { clickHandle }
   }

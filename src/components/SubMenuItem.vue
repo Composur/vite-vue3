@@ -23,9 +23,9 @@ export default defineComponent({
     }
   },
   components: { MailOutlined },
-  setup(props, context) {
+  setup(props, { emit }) {
     const changeMenu = (item) => {
-      context.emit('clickHandle', item)
+      emit('clickHandle', item)
     }
     return {
       changeMenu

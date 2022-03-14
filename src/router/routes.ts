@@ -9,7 +9,7 @@ import Setup from '@/views/Test/Setup.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/home',
+    path: '/',
     name: 'Home',
     component: Home,
     meta: {
@@ -32,6 +32,15 @@ const routes: Array<RouteRecordRaw> = [
         component: Setup,
         meta: {
           title: 'setup',
+          icon: 'MailOutlined'
+        }
+      },
+      {
+        path: '/communication',
+        name: 'Communication',
+        component: () => import('@/views/Test/Father.vue'),
+        meta: {
+          title: '组件通信',
           icon: 'MailOutlined'
         }
       }
