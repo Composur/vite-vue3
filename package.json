@@ -35,12 +35,11 @@
   "dependencies": {
     "ant-design-vue": "^3.0.0-beta.13",
     "axios": "^0.21.1",
-    "element-plus": "^1.1.0-beta.7",
     "nprogress": "^0.2.0",
+    "pinia": "^2.0.12",
     "qiankun": "^2.6.3",
-    "vue": "^3.2.6",
-    "vue-router": "^4.0.11",
-    "vuex": "^4.0.2"
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.1",

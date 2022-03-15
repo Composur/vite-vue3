@@ -43,6 +43,15 @@ const routes: Array<RouteRecordRaw> = [
           title: '组件通信',
           icon: 'MailOutlined'
         }
+      },
+      {
+        path: '/pinia',
+        name: 'Pinia',
+        component: () => import('@/views/Test/Pinia.vue'),
+        meta: {
+          title: 'Pinia',
+          icon: 'MailOutlined'
+        }
       }
     ]
   },

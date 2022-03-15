@@ -172,7 +172,7 @@ export default defineComponent({
   .cns-child-title:hover {
     color: #408fff;
   }
-  /deep/ .cns-menu-sub {
+  :deep(.cns-menu-sub) {
     background: rgb(12, 28, 53);
   }
 }
