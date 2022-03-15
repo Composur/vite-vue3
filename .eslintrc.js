@@ -32,5 +32,11 @@ module.exports = {
     'no-console': 'off',
     'vue/no-v-model-argument': 'off'
   },
-  settings: {}
+  settings: {},
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
+    defineExpose: 'readonly',
+    withDefaults: 'readonly'
+  }
 }

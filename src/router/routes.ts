@@ -52,6 +52,15 @@ const routes: Array<RouteRecordRaw> = [
           title: 'Pinia',
           icon: 'MailOutlined'
         }
+      },
+      {
+        path: '/script-setup',
+        name: 'ScriptSetup',
+        component: () => import('@/views/Test/Scriptsetup.vue'),
+        meta: {
+          title: 'ScriptSetup',
+          icon: 'MailOutlined'
+        }
       }
     ]
   },
