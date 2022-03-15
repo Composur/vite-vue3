@@ -12,7 +12,6 @@ declare module 'vue' {
     ASubMenu: typeof import('ant-design-vue/es')['SubMenu']
     Header: typeof import('./src/components/Header.vue')['default']
     Main: typeof import('./src/components/Main.vue')['default']
-    Meun: typeof import('./src/components/Meun.vue')['default']
     Nav: typeof import('./src/components/Nav.vue')['default']
     SubMenu: typeof import('./src/components/SubMenu.vue')['default']
     SubMenuItem: typeof import('./src/components/SubMenuItem.vue')['default']
