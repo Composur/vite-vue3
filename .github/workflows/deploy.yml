@@ -20,8 +20,7 @@ jobs:
 
       - name: Build
         run: |
-          npm run build
-          cp dist/index.html dist/404.html
+          npm run build:github
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3 # 使用部署到 GitHub pages 的 action
