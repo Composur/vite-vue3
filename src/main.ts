@@ -19,3 +19,4 @@ Object.keys(Icon).forEach((iconName) => {
 // 全局 store
 setupStore(app)
 app.use(Antd).use(router).mount('#app')
+console.log(import.meta.env)
