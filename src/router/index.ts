@@ -9,8 +9,8 @@ import {
 } from 'vue-router'
 import routes from './routes'
 
-const { GITHUB } = import.meta.env
-const history = GITHUB ? createWebHashHistory() : createWebHistory()
+const { VITE_GIHUB } = import.meta.env
+const history = VITE_GIHUB ? createWebHashHistory() : createWebHistory()
 const router: Router = createRouter({
   history,
   routes
